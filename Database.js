@@ -1,4 +1,4 @@
-var mysql = new require("mysql").Client();
+var mysql = new require("mysql").createClient();
 mysql.user = require("./dbInfo").DBInfo.Username;
 mysql.password = require("./dbInfo").DBInfo.Password;
 mysql.database = require("./dbInfo").DBInfo.Database;
