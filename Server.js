@@ -8,7 +8,7 @@ var User = require("./User");
 var incomingConnection = function(socket)
 {
 	User.FromToken(socket.manager.handshaken[socket.id].query.token, socket);
-	setTimeout(socket.disconnect(), 3000);
+	setTimeout(socket.disconnect, 3000);
 	//socket.addListener("connect", function(resource, token)
 	//{
 	//	console.log("Connect with token: " + token);
