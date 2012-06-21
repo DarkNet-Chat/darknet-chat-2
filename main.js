@@ -1,4 +1,8 @@
 var SERVER_PORT = 8889;
+
+require("./Server").Start(SERVER_PORT);
+console.log("Server listening on port " + SERVER_PORT);
+
 /* * /
 
 var sstart = function(port) { return function() { require("./Server").Start(port); console.log("Server listening on port " + port); } };
