@@ -1,4 +1,4 @@
-var SERVER_PORT = 8889;
+var SERVER_PORT = 8888;
 
 require("./User").LoadAll();
 setTimeout(require("./History").Init, 2000);

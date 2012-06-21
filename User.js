@@ -68,7 +68,6 @@ var createUser = function(dbRow)
 			AvatarHistory: [],
 			LoadAvatars: function()
 			{
-				mysql.connect();
 				var user = this;
 				mysql.query("SELECT ID,Filename,LastUsed FROM AvatarHistory WHERE UserID='" + this.ID + "' ORDER BY LastUsed DESC", function(e, rows, c)
 				{
@@ -623,7 +622,6 @@ exports.GetAll = function() { return Users; };
 
 exports.LoadAll = function()
 {
-	mysql.connect();
 	var users = mysql.query("SELECT * FROM Users", function(e, rows, f)
 	{
 		for(var row in rows)
