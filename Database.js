@@ -19,7 +19,6 @@ exports.ExecuteNonReader = function(sql)
 	for(var i = 0; i < arguments.length - 1; i++)
 		sql = sql.replace(new RegExp("%" + i, "ig"), Escape(arguments[i + 1]));
 		
-	mysql.connect();
 	mysql.query(sql, function() { mysql.destroy(); });
 }
 
@@ -42,8 +41,6 @@ function Do(final)
 {
 	if(PendingUpdates.length > 0)
 	{
-		mysql.connect();
-
 		var i = -1;
 		var DoInternal = function()
 		{

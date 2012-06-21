@@ -1,7 +1,18 @@
 var SERVER_PORT = 8889;
 
-require("./Server").Start(SERVER_PORT);
-console.log("Server listening on port " + SERVER_PORT);
+require("./User").LoadAll();
+setTimeout(require("./History").Init, 2000);
+setTimeout(function()
+{
+	require("./Server").Start(SERVER_PORT);
+	console.log("Server listening on port " + SERVER_PORT);
+}, 4000);
+
+process.on("SIGINT", function()
+{
+	require("./Server").Shutdown();
+});
+
 
 /* * /
 

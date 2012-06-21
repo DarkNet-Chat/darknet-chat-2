@@ -28,7 +28,6 @@ exports.Init = function()
 	mysql.password = require("./dbInfo").DBInfo.Password;
 	mysql.database = require("./dbInfo").DBInfo.Database;
 	
-	mysql.connect();
 	mysql.query("SELECT EventID,UserID,Type,Message,Room,Timestamp FROM ChatEvents WHERE Type='chat' OR Type='leave' OR Type='join' ORDER BY EventID DESC LIMIT " + HistoryLength, function(e, rows, columns)
 	{
 		for(var i = rows.length - 1; i >= 0; i--)

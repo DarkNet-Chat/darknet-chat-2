@@ -179,7 +179,7 @@ var createUser = function(dbRow)
 			{				
 				if(this.Connection != null)
 				{
-					this.Connection.write(msg);
+					this.Connection.send(msg);
 					return true;
 				}
 				return false;
@@ -589,12 +589,12 @@ var attachSocketToUser = function(user, socket)
 	if(user == null || socket == null)
 	{
 		if(socket != null)
-			socket.write("Server.InitForLogin();");
+			socket.send("Server.InitForLogin();");
 		return;
 	}
 		
-	socket.addListener("data", user.ProcessMessage());
-	socket.addListener("close", function()
+	socket.on("message", user.ProcessMessage());
+	socket.on("disconnect", function()
 	{
 		console.log("Connection closed: " + user.Username);
 		if(user.Connection == socket)
@@ -604,10 +604,9 @@ var attachSocketToUser = function(user, socket)
 			if(user.Connection != null)
 				user.Connection = null;
 		}
-		socket.end();
 	});
 	user.Connection = socket;
-	socket.write("Server.Start();");
+	socket.send("Server.Start();");
 	
 	if(user.OfflineMessages.length > 0)
 	{
@@ -669,7 +668,7 @@ exports.FromToken = function(token, socket)
 {
 	if(token == null || token == "")
 	{
-		socket.write("Server.InitForLogin();");
+		socket.send("Server.InitForLogin();");
 		return;
 	}
 			
@@ -687,9 +686,7 @@ exports.FromToken = function(token, socket)
 	
 	// If we're here, either the token is invalid or
 	// our metadata is old.  Hit the database.
-	var proceed = false;
-	mysql.connect();
-	
+	var proceed = false;	
 	mysql.query("SELECT * FROM Users WHERE Token=? AND TokenTimeout>?", [token, Utility.Now()], function(e, rows, f)
 	{
 		var user = null;
@@ -704,7 +701,7 @@ exports.FromToken = function(token, socket)
 		if(user != null)
 			attachSocketToUser(user, socket);
 		else
-			socket.write("Server.InitForLogin();");
+			socket.send("Server.InitForLogin();");
 	});
 	
 	return null;
@@ -793,7 +790,7 @@ exports.LogoutAll = function()
 			eid++;
 		}
 		if(user.Connection != null)
-			user.Connection.end();
+			user.Connection.disconnect();
 	}
 };
 
