@@ -511,7 +511,6 @@ var createUser = function(dbRow)
 							var limit = 10;
 							var json = "{\"Type\":\"Scrollback\",\"Data\":[";
 						
-							mysql.connect();
 							mysql.query("SELECT EventID,UserID,JSON FROM ChatEvents WHERE Room='public' AND EventID<" + ts + " ORDER BY EventID DESC LIMIT " + limit, function(e, rows, c)
 							{
 								if(rows)
