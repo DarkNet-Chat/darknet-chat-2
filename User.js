@@ -91,7 +91,7 @@ var createUser = function(dbRow)
 					return;
 					
 				var user = this;
-				mysql.connect();
+				//mysql.connect();
 				mysql.query("SELECT Filename FROM AvatarHistory WHERE ID=? AND UserID=?", [ avatarID, user.ID ], function(e, rows, c)
 				{
 					if(rows.length > 0)
@@ -131,7 +131,7 @@ var createUser = function(dbRow)
 					
 				var user = this;
 				
-				mysql.connect();
+				//mysql.connect();
 				mysql.query("SELECT Filename FROM AvatarHistory WHERE ID=? AND UserID=?", [ avatarID, user.ID ], function(e, rows, c)
 				{
 					if(rows.length > 0)
